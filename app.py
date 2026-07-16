@@ -26,7 +26,7 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # User input box
-if user_prompt := st.chat_input("Puchiye kuch bhi..."):
+if user_prompt := st.chat_input("Ask me anything..."):
     st.session_state.messages.append({"role": "user", "content": user_prompt})
     with st.chat_message("user"):
         st.markdown(user_prompt)
