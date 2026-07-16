@@ -5,8 +5,13 @@ st.set_page_config(page_title="Nirvaan's AI Bot", page_icon="🤖")
 st.title("🤖 Nirvaan's Personal AI Chatbot")
 st.write("Welcome! Yeh mera khud ka banaya hua AI chatbot hai.")
 
-# Yahan par apni copy ki hui Groq API Key daalna
-GROQ_API_KEY = "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"
+# Seedhe Streamlit Secrets se API key uthane ke liye
+if "GROQ_API_KEY" in st.secrets:
+    GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
+elif "api_key" in st.secrets:
+    GROQ_API_KEY = st.secrets["api_key"]
+else:
+    GROQ_API_KEY = ""
 
 # Initialize Groq Client
 client = Groq(api_key=GROQ_API_KEY)
@@ -30,6 +35,9 @@ if user_prompt := st.chat_input("Puchiye kuch bhi..."):
     with st.chat_message("assistant"):
         response_placeholder = st.empty()
         try:
+            if not GROQ_API_KEY:
+                raise ValueError("API Key nahi mili!")
+                
             chat_completion = client.chat.completions.create(
                 messages=[
                     {"role": m["role"], "content": m["content"]}
@@ -41,4 +49,5 @@ if user_prompt := st.chat_input("Puchiye kuch bhi..."):
             response_placeholder.markdown(reply)
             st.session_state.messages.append({"role": "assistant", "content": reply})
         except Exception as e:
-            response_placeholder.markdown("Ohho! Kuch error aaya hai. API key check karein.")
+            response_placeholder.markdown(f"Ohho! Kuch error aaya hai. API key check karein. Error details: {str(e)}")
+       
