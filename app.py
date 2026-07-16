@@ -43,7 +43,7 @@ if user_prompt := st.chat_input("Puchiye kuch bhi..."):
                     {"role": m["role"], "content": m["content"]}
                     for m in st.session_state.messages
                 ],
-                model="llama-3.3-70b-versatile",
+                model="llama-3.1-8b-instant",
             )
             reply = chat_completion.choices[0].message.content
             response_placeholder.markdown(reply)
