@@ -3,7 +3,7 @@ from groq import Groq
 
 st.set_page_config(page_title="Nirvaan's AI Bot", page_icon="🤖")
 st.title("🤖 Nirvaan's Personal AI Chatbot")
-st.write("Welcome! Yeh mera khud ka banaya hua AI chatbot hai.")
+st.write("Welcome! Step into the future with my custom-engineered AI companion.")
 
 # Seedhe Streamlit Secrets se API key uthane ke liye
 if "GROQ_API_KEY" in st.secrets:
@@ -36,7 +36,7 @@ if user_prompt := st.chat_input("Ask me anything..."):
         response_placeholder = st.empty()
         try:
             if not GROQ_API_KEY:
-                raise ValueError("API Key nahi mili!")
+                raise ValueError("API Key not found!")
                 
             chat_completion = client.chat.completions.create(
                 messages=[
